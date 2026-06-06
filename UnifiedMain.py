@@ -225,7 +225,10 @@ class UnifiedCombatSystem:
             with open(recoil_path, encoding="utf-8") as f:
                 recoil_data = _json.load(f)
             self.executor.configure_nova_recoil(recoil_data)
-            log(f"[NOVA] Weapon-specific recoil data loaded ({len(recoil_data.get('weapons', {}))} weapons)")
+            weapon_count = len(recoil_data.get("patterns", {}).get("none", {}))
+            log(f"[NOVA] Weapon-specific recoil data loaded ({weapon_count} weapons)")
+            for w, params in recoil_data.get("patterns", {}).get("none", {}).items():
+                log(f"[NOVA]   {w}: {params}")
         except Exception as e:
             log(f"[NOVA] Failed to init: {e}")
 

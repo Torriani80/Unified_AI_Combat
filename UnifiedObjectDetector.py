@@ -81,14 +81,9 @@ class UnifiedObjectDetector:
 
         for name, templ in self.templates.items():
             th, tw = templ.shape
-            # Redimensiona template se maior que a ROI (dinâmico)
+            # Redimensiona template para o tamanho exato da ROI (matchTemplate requer templ <= roi)
             if th > rh or tw > rw:
-                factor = min(rh / th, rw / tw) * 0.85
-                if factor <= 0:
-                    continue
-                new_w = max(1, int(tw * factor))
-                new_h = max(1, int(th * factor))
-                templ = cv2.resize(templ, (new_w, new_h), interpolation=cv2.INTER_AREA)
+                templ = cv2.resize(templ, (rw, rh), interpolation=cv2.INTER_AREA)
             try:
                 result = cv2.matchTemplate(gray_roi, templ, cv2.TM_CCOEFF_NORMED)
                 _, max_val, _, _ = cv2.minMaxLoc(result)

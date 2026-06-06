@@ -2,13 +2,8 @@ import cv2
 import numpy as np
 import sys
 from pathlib import Path
-from typing import Optional, Tuple
+from typing import Optional, Tuple, List
 from logger import log
-
-
-# Tamanho máximo de referência para pré-escala dos templates
-_REF_TEMPLATE_W = 320
-_REF_TEMPLATE_H = 160
 
 
 class UnifiedObjectDetector:
@@ -17,8 +12,8 @@ class UnifiedObjectDetector:
     """
     def __init__(self, method: str = "template"):
         self.method = method
-        self.templates = {}
-        self.weapon_names = []
+        self.templates: dict = {}
+        self.weapon_names: List[str] = []
         self.active_provider = "TEMPLATE"
         self.current_weapon = None
         self.current_confidence = 0.0
@@ -54,21 +49,13 @@ class UnifiedObjectDetector:
                 img = cv2.imread(str(fname), cv2.IMREAD_GRAYSCALE)
                 if img is not None:
                     name = fname.stem.upper()
-                    # Pré-escala leve para evitar templates monstruosos
-                    h, w = img.shape
-                    if h > _REF_TEMPLATE_H or w > _REF_TEMPLATE_W:
-                        factor = min(_REF_TEMPLATE_H / h, _REF_TEMPLATE_W / w) * 0.85
-                        if factor > 0:
-                            new_w = max(1, int(w * factor))
-                            new_h = max(1, int(h * factor))
-                            img = cv2.resize(img, (new_w, new_h), interpolation=cv2.INTER_AREA)
                     self.templates[name] = img
                     self.weapon_names.append(name)
 
         if not self.templates:
             log("[ARMAS] Nenhum template de arma encontrado em weapon_templates/")
         else:
-            log(f"[ARMAS] {len(self.templates)} templates de armas carregados")
+            log(f"[ARMAS] {len(self.templates)} templates carregados: {list(self.templates.keys())}")
 
     def get_center_of_screen(self, frame: np.ndarray):
         h, w = frame.shape[:2]
@@ -81,27 +68,25 @@ class UnifiedObjectDetector:
 
         for name, templ in self.templates.items():
             th, tw = templ.shape
-            # Redimensiona template para o tamanho exato da ROI (matchTemplate requer templ <= roi)
+            # Redimensiona template se maior que a ROI (EXATAMENTE como weapon_detector.py antigo)
             if th > rh or tw > rw:
                 templ = cv2.resize(templ, (rw, rh), interpolation=cv2.INTER_AREA)
             try:
                 result = cv2.matchTemplate(gray_roi, templ, cv2.TM_CCOEFF_NORMED)
                 _, max_val, _, _ = cv2.minMaxLoc(result)
+                conf = float(max_val)
             except Exception:
                 continue
 
-            if max_val > best_conf:
-                best_conf = float(max_val)
+            if conf > best_conf:
+                best_conf = conf
                 best_name = name
-                if best_conf > 0.88:
+                if best_conf > 0.95:
                     return (best_name, best_conf)
 
-        if best_conf >= 0.68:
-            return (best_name, best_conf)
-        return (None, 0.0)
+        return (best_name, best_conf)
 
     def detect_slot1(self, frame: np.ndarray) -> Optional[str]:
-        """Detecta arma no SLOT 1."""
         if frame is None or not self.templates:
             return None
         h, w = frame.shape[:2]
@@ -114,12 +99,15 @@ class UnifiedObjectDetector:
         gray_roi = cv2.cvtColor(roi, cv2.COLOR_BGR2GRAY)
         name, conf = self._match_weapon_in_roi(gray_roi)
         if name:
-            self.current_weapon = name
-            self.current_confidence = conf
+            log(f"[SLOT1] {name} conf={conf:.3f} roi=({rx},{ry},{rw},{rh})")
+        else:
+            if conf > 0:
+                log(f"[SLOT1] NADA conf_max={conf:.3f} roi=({rx},{ry},{rw},{rh})")
+        self.current_weapon = name
+        self.current_confidence = conf
         return name
 
     def detect_slot2(self, frame: np.ndarray) -> Optional[str]:
-        """Detecta arma no SLOT 2."""
         if frame is None or not self.templates:
             return None
         h, w = frame.shape[:2]
@@ -131,12 +119,12 @@ class UnifiedObjectDetector:
             return None
         gray_roi = cv2.cvtColor(roi, cv2.COLOR_BGR2GRAY)
         name, conf = self._match_weapon_in_roi(gray_roi)
+        if name:
+            log(f"[SLOT2] {name} conf={conf:.3f} roi=({rx},{ry},{rw},{rh})")
         return name
 
     def detect_weapon(self, frame: np.ndarray) -> Optional[str]:
-        """Detecta arma no SLOT 1 (compatibilidade)."""
         return self.detect_slot1(frame)
 
     def detect_enemies(self, frame: np.ndarray):
-        """Compatibilidade - sempre retorna lista vazia."""
         return []

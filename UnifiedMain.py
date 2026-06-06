@@ -291,13 +291,12 @@ class UnifiedCombatSystem:
         if preset_key:
             self._manual_override = True
             cfg = dict(self.weapon_presets[preset_key])
-            # Restaura ajuste por arma salvo (vertical/horizontal) se houver
             cfg.setdefault("adjust_vertical", 0.0)
             cfg.setdefault("adjust_horizontal", 0.0)
             self.current_weapon_cfg = cfg
             self.executor.set_adjust(cfg.get("adjust_vertical", 0.0), cfg.get("adjust_horizontal", 0.0))
+            self.executor.set_current_weapon(name)
             log(f"Weapon selected: {preset_key} -> {self.current_weapon_cfg}")
-            # Atualiza UI para refletir os valores do preset/arma
             self.hud.param_vars.get("vertical") and self.hud.param_vars["vertical"].setValue(round(cfg.get("vertical", 0)))
             self.hud.param_vars.get("horizontal") and self.hud.param_vars["horizontal"].setValue(round(cfg.get("horizontal", 0)))
 

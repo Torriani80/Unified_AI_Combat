@@ -59,24 +59,6 @@ def install_dependencies():
 
 install_dependencies()
 
-def _import_module(name, symbol=None):
-    try:
-        mod = __import__(name, fromlist=[''])
-    except (ImportError, FileNotFoundError):
-        if not getattr(sys, 'frozen', False):
-            raise
-        import importlib.util
-        internal = Path(sys._MEIPASS) / '_internal'
-        pyfile = internal / f'{name}.py'
-        spec = importlib.util.spec_from_file_location(name, str(pyfile))
-        if spec is None:
-            raise ImportError(f"Nao foi possivel carregar {name}")
-        mod = importlib.util.module_from_spec(spec)
-        spec.loader.exec_module(mod)
-    if symbol:
-        return getattr(mod, symbol)
-    return mod
-
 from PyQt5.QtWidgets import (QApplication, QWidget, QVBoxLayout, QHBoxLayout, 
                               QLabel, QLineEdit, QPushButton, QFrame, QGraphicsDropShadowEffect,
                               QSizePolicy, QCheckBox)
@@ -88,7 +70,7 @@ from screen_capture import ScreenCapturer
 from UnifiedObjectDetector import UnifiedObjectDetector
 from CombatCore import UnifiedCommandExecutor
 
-TacticalHUD = _import_module('TacticalHUD', 'TacticalHUD')
+from TacticalHUD import TacticalHUD
 
 from CombatSecurity import CombatSecurity
 from crosshair_overlay import CrosshairOverlay

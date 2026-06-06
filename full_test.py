@@ -202,6 +202,11 @@ r(f"[5/6] Builds", "---", "")
 
 if os.path.exists("dist/Unified_Combat_V1.exe"):
     size_mb = os.path.getsize("dist/Unified_Combat_V1.exe") / 1024 / 1024
+    try:
+        import cv2
+        r("  cv2 (OpenCV) disponivel", "OK", cv2.__version__)
+    except ImportError:
+        r("  cv2 (OpenCV) disponivel", "ERRO", "cv2 nao importavel - vai crashar no runtime")
     r("  Unified_Combat_V1.exe", "OK", f"{size_mb:.1f} MB")
 else:
     r("  Unified_Combat_V1.exe", "ERRO", "nao encontrado")

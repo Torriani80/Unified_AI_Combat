@@ -109,11 +109,6 @@ class TacticalHUD(QWidget):
         title.setStyleSheet("color: #D4AF37; font-size: 22px; font-weight: bold; border: none; background: transparent;")
         content.addWidget(title)
 
-        user_lbl = QLabel(f"JOGADOR: {self.user_nick.upper()}")
-        user_lbl.setAlignment(Qt.AlignCenter)
-        user_lbl.setStyleSheet("color: #808080; font-size: 10px; border: none; background: transparent;")
-        content.addWidget(user_lbl)
-
         sep = QFrame()
         sep.setFrameShape(QFrame.HLine)
         sep.setFixedHeight(1)
@@ -147,9 +142,9 @@ class TacticalHUD(QWidget):
         status_row.addStretch()
         c1l.addLayout(status_row)
 
-        self.weapon_label = QLabel("ARMA: [ SELECIONE ]")
-        self.weapon_label.setStyleSheet("color: #D4AF37; font-weight: bold; font-size: 12px; border: none; background: transparent;")
-        c1l.addWidget(self.weapon_label)
+        self.player_label = QLabel(f"JOGADOR: {self.user_nick.upper()}")
+        self.player_label.setStyleSheet("color: #808080; font-size: 11px; border: none; background: transparent;")
+        c1l.addWidget(self.player_label)
 
         self.shot_label = QLabel("TIROS: 0")
         self.shot_label.setStyleSheet("color: #D4AF37; font-family: Consolas; font-size: 13px; font-weight: bold; border: none; background: transparent;")
@@ -527,7 +522,6 @@ class TacticalHUD(QWidget):
     def _reset_weapon_state(self):
         self.shot_label.setText("TIROS: 0")
         self.current_weapon = "[ SELECIONE ]"
-        self.weapon_label.setText("ARMA: [ SELECIONE ]")
         log("CALIBRAGEM: reset de arma (F5)")
 
     def load_weapons(self, presets: dict):
@@ -620,7 +614,7 @@ class TacticalHUD(QWidget):
             sec = s % 60
             self.license_label.setText(f"LICENCA: {days}d {h:02d}:{m:02d}:{sec:02d}")
 
-    def update_ai_status(self, weapon="NONE", shots=0, status="ACTIVE",
+    def update_ai_status(self, shots=0, status="ACTIVE",
                          slot1=None, slot2=None, burst=0, fps=0, profiler=None):
         if slot1:
             self.slot1_label.setText(f"SLOT 1: [ {slot1.upper()} ]")
@@ -634,7 +628,6 @@ class TacticalHUD(QWidget):
         else:
             self.slot2_label.setText("SLOT 2: Selecione o Slot 2")
             self.slot2_label.setStyleSheet("color: #666666; font-weight: bold; font-size: 11px; border: none; background: transparent;")
-        self.weapon_label.setText(f"ARMA: [ {weapon.upper() if weapon else 'SELECIONE'} ]")
         self.shot_label.setText(f"TIROS: {shots}")
         if fps:
             self.cap_label.setText(f"CAP: {fps}")

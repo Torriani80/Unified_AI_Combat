@@ -168,7 +168,6 @@ class UnifiedCombatSystem:
         self._hud_slot1 = None
         self._hud_slot2 = None
         self._hud_burst = 0
-        self._hud_weapon_label = "WEAPON: [ UNKNOWN ]"
         self._frame_queue = Queue(maxsize=2)
 
         self._alive = True
@@ -294,16 +293,15 @@ class UnifiedCombatSystem:
             cfg.setdefault("adjust_horizontal", 0.0)
             self.current_weapon_cfg = cfg
             self.executor.set_adjust(cfg.get("adjust_vertical", 0.0), cfg.get("adjust_horizontal", 0.0))
-            self._hud_weapon_label = f"WEAPON: [ {preset_key} ]"
             log(f"Weapon selected: {preset_key} -> {self.current_weapon_cfg}")
             # Atualiza UI para refletir os valores do preset/arma
             self.hud.param_vars.get("vertical") and self.hud.param_vars["vertical"].setValue(round(cfg.get("vertical", 0)))
             self.hud.param_vars.get("horizontal") and self.hud.param_vars["horizontal"].setValue(round(cfg.get("horizontal", 0)))
 
     def _on_save_preset(self):
-        weapon_name = self.hud.weapon_label.text().replace("ARMA: [ ", "").replace(" ]", "").strip()
-        if not weapon_name or weapon_name == "SELECIONE":
-            log("[PRESET] Nenhuma arma selecionada/detectada para salvar")
+        weapon_name = self._hud_slot1 or ""
+        if not weapon_name:
+            log("[PRESET] Nenhuma arma detectada/salvar")
             return
         import json
         import datetime
@@ -349,9 +347,7 @@ class UnifiedCombatSystem:
     def _sync_hud(self):
         try:
             active = self.running
-            weapon = self._hud_weapon_label.replace("WEAPON: [ ", "").replace(" ]", "")
             self.hud.update_ai_status(
-                weapon=weapon,
                 shots=self.executor.shot_counter,
                 status="ACTIVE" if active else "READY",
                 slot1=self._hud_slot1,
@@ -456,7 +452,6 @@ class UnifiedCombatSystem:
                                     self.current_weapon_cfg = dict(self.weapon_presets[preset_key])
                                     self.executor.set_current_weapon(auto_weapon)
                                     log(f"[ARMA DETECTADA] {auto_weapon} -> {preset_key}")
-                                    self._hud_weapon_label = f"WEAPON: [ {auto_weapon.upper()} ]"
 
                     # Anti-Recoil ativado SOMENTE com botão direito pressionado
                     if (ctypes.windll.user32.GetAsyncKeyState(0x02) & 0x8000) != 0:

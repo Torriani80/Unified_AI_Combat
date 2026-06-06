@@ -1,0 +1,4 @@
+A
+[FIREBASE] Carregando credenciais de: C:\Users\Bruno\AppData\Roaming\Unified_AI_Combat\serviceAccountKey.json
+[FIREBASE] Inicializado com sucesso
+B

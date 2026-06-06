@@ -1,0 +1,26 @@
+# Firebase credentials (SENSITIVE - DO NOT COMMIT)
+serviceAccountKey.json
+*.pem
+*.key
+
+# Build outputs
+dist/
+build/
+*.spec
+
+# Runtime generated
+crosshair_pos.json
+session.json
+test_output.json
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Environment
+venv/
+.env
+
+# IDE
+.vscode/
+.idea/

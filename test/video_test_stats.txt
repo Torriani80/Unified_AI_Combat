@@ -1,0 +1,5 @@
+Frames: 60
+Detecções totais: 1969
+Posições de mira: 60
+Tempo médio/frame: 98.7ms
+FPS processamento: 10.1

@@ -1,0 +1,32 @@
+=== CONTEXTO DA SESSÃO - 03/06/2026 (BUILD 2) ===
+
+## Última Build
+- `dist/Unified_Combat_V1.exe` (152 MB, 12:44)
+- Firebase ativo (serviceAccountKey.json incluso)
+- Entry point: UnifiedMain.py
+
+## Correções Aplicadas Hoje (03/06 Build 3)
+
+### 7. OSCILAÇÃO DA MIRA - AGORA USA CONTROLADOR PROPORCIONAL
+- **aim_calculation.py**: Reescrito completamente — substituiu suavização absoluta + predição por controlador proporcional simples
+- Calcula OFFSET (distância) entre alvo e centro → suaviza com EMA (alpha=0.35) → aplica gain
+- **Causa raiz**: suavização operava em coordenadas absolutas, mas o executor convertia para relativo. Jogo respondia ao mouse mudando câmera → detecção mudava → loop de feedback → oscilação
+- **CombatCore.py**: Removido jitter duplicado de `move_mouse()` (o AimCalculator já adiciona ruído)
+- **config.py**: Adicionado `aim_gain: 0.4` (controla velocidade de convergência)
+- **config_pubg.json**: `prediction_enabled: false` (causava overshoot), `aim_gain: 0.4`
+
+### 6. LOGIN PERSISTENTE - AGORA SEM FIREBASE NO RETORNO
+- **UnifiedMain.py**: `_check_session()` agora detecta `remember=True` + chave salva em `session.json` e chama `on_success` direto, sem validar com Firebase
+- Login só valida Firebase na primeira vez; nas próximas aberturas do EXE, pula direto pro HUD
+
+## Estrutura de Arquivos
+- UnifiedMain.py — entry point, pipeline, login window
+- TacticalHUD.py — HUD PyQt5 + FOVOverlay + BodyZoneWidget
+- UnifiedObjectDetector.py — YOLO via OpenCV DNN (classe 0 = person)
+- CombatCore.py — aim assist + anti-recoil executor
+- CombatSecurity.py — Firebase auth + license
+- aim_calculation.py — smooth, offset, prediction
+- config.py — dataclasses globais
+- config_pubg.json — configuração do jogo (confidence: 0.25, deadzone: 5px)
+- presets.json — 27 armas PUBG
+- screen_capture.py — captura com DXCam/MSS

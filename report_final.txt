@@ -1,0 +1,30 @@
+======================================================================
+  RELATORIO COMPLETO - UNIFIED AI COMBAT
+  05/06/2026 22:15:05
+======================================================================
+[FIREBASE] Carregando credenciais de: C:\Users\Bruno\AppData\Roaming\Unified_AI_Combat\serviceAccountKey.json
+[FIREBASE] Inicializado com sucesso
+[DETECT] Nenhum diretório de templates configurado.
+[DETECT] Use templates padrão sintéticos (internos).
+[DETECT] 2 templates sintéticos gerados.
+[CONFIG] Modo de teste ATIVADO - nenhum comando real será executado.
+[WARN] Modelo YOLO não encontrado: C:\Users\Bruno\Desktop\Unified_AI_Combat\yolov8n.onnx
+[WARN] Voltando para detecção por template.
+[DETECT] Nenhum diretório de templates configurado.
+[DETECT] Use templates padrão sintéticos (internos).
+[DETECT] 2 templates sintéticos gerados.
+======================================================================
+
+  RESUMO FINAL:
+  ==================================================
+  Total de verificacoes: 44
+  PASSOU: 43
+  FALHOU: 0
+  PULADO: 1
+  AUSENTE: 0
+
+  STATUS: 100% - TODOS OS TESTES PASSARAM
+  NOTA: 1 teste(s) foram pulados por exigirem GUI (PyQt5 QApplication)
+
+  Relatorio gerado em: 05/06/2026 22:15:07
+======================================================================

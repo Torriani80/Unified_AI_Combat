@@ -1,0 +1,37 @@
+{
+  "test_mode": false,
+  "screen": {
+    "target_fps": 144,
+    "use_dxcam": true,
+    "monitor_index": 1,
+    "reference_resolution": "1920x1080"
+  },
+  "detection": {
+    "method": "template"
+  },
+  "command": {
+    "enabled": true
+  },
+  "weapon_detection": {
+    "enabled": true,
+    "detect_interval": 0.5,
+    "attachment_regions": {
+      "muzzle": [
+        { "name": "suppressor", "check_area": [1246, 256, 1274, 284], "check_area2": [1246, 486, 1274, 514] },
+        { "name": "compensator", "check_area": [1246, 256, 1274, 284], "check_area2": [1246, 486, 1274, 514] },
+        { "name": "flash_hider", "check_area": [1246, 256, 1274, 284], "check_area2": [1246, 486, 1274, 514] }
+      ],
+      "grip": [
+        { "name": "vertical_grip", "check_area": [1436, 237, 1484, 285], "check_area2": [1436, 463, 1484, 511] },
+        { "name": "angled_grip", "check_area": [1346, 255, 1374, 284], "check_area2": [1346, 485, 1374, 514] },
+        { "name": "half_grip", "check_area": [1346, 255, 1374, 284], "check_area2": [1346, 485, 1374, 514] },
+        { "name": "light_grip", "check_area": [1346, 255, 1374, 284], "check_area2": [1346, 485, 1374, 514] },
+        { "name": "thumb_grip", "check_area": [1346, 255, 1374, 284], "check_area2": [1346, 485, 1374, 514] }
+      ],
+      "stock": [
+        { "name": "tactical_stock", "check_area": [1432, 248, 1480, 296], "check_area2": [1432, 478, 1480, 526] },
+        { "name": "cheek_pad", "check_area": [1432, 248, 1480, 296], "check_area2": [1432, 478, 1480, 526] }
+      ]
+    }
+  }
+}

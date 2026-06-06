@@ -1,0 +1,27 @@
+# Dependências do Sistema de Macro com IA para Jogos de Tiro
+#
+# Instalação:
+#   pip install -r requirements.txt
+#
+# Módulos obrigatórios:
+opencv-python>=4.8.0     # Processamento de imagem, visão computacional
+numpy>=1.24.0            # Manipulação de arrays e cálculos numéricos
+mss>=9.0.0              # Captura de tela rápida (multi-monitor)
+Pillow>=11.0.0          # Processamento de imagens para interface gráfica
+PyQt5>=5.15.0           # Interface Gráfica Profissional
+
+# Módulos opcionais (instale conforme necessidade):
+# pyautogui>=0.9.53      # Controle de mouse/teclado (apenas modo ao vivo)
+# dxcam>=0.4.0           # Captura de tela via DirectX (mais rápido, Windows)
+# onnxruntime>=1.15.0    # Execução de modelos YOLO/ONNX
+# keyboard>=0.13.5       # Detecção de teclas em segundo plano
+# matplotlib>=3.7.0      # Visualização de dados de teste
+# pyinstaller>=6.0.0     # Compilar .exe (build.bat)
+firebase-admin>=7.4.0    # Segurança e Gestão de Licenças
+
+# Instalação completa (modo ao vivo):
+#   pip install opencv-python numpy mss Pillow pyautogui dxcam onnxruntime keyboard pyinstaller
+
+# Para compilar .exe:
+#   pip install pyinstaller
+#   build.bat

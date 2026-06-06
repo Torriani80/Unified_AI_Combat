@@ -1,0 +1,25 @@
+INICIANDO TESTES...
+============================================================
+[1/6] Syntax check: 30/34 OK
+[2/6] Import tests:
+  [OK] config
+  [OK] logger
+  [OK] screen_capture
+  [OK] weapon_detector
+  [OK] aim_tracker
+  [OK] aim_calculation
+  [OK] command_executor
+  [OK] CombatCore
+  [OK] CombatSecurity
+  [OK] TacticalHUD
+  [OK] crosshair_overlay
+  [OK] object_detection
+  [OK] UnifiedObjectDetector
+  [OK] main (MacroSystem)
+[3/6] Instantiation tests:
+  [OK] AimTracker()
+  [OK] AimCalculator()
+  [OK] UnifiedCommandExecutor()
+[FIREBASE] Carregando credenciais de: C:\Users\Bruno\AppData\Roaming\Unified_AI_Combat\serviceAccountKey.json
+[FIREBASE] Inicializado com sucesso
+  [OK] CombatSecurity()

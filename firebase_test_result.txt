@@ -1,0 +1,10 @@
+Cred path: C:\Users\Bruno\Desktop\Unified_AI_Combat\serviceAccountKey.json
+File exists: True
+Firebase init OK
+Licencas lidas: 2
+  013167FB-9C3F-44: hwid=811F79A0-B669-480D-258B-08BFB86F491E used_by=Bruno
+  3D7FAC65-B173-49: hwid=811F79A0-B669-480D-258B-08BFB86F491E used_by=Torriani
+WRITE: OK (TESTE-39E4924F)
+READ after write: True
+UPDATE: OK - hwid = 'TEST-HWID-123'
+DELETE: OK - data after delete is None: True

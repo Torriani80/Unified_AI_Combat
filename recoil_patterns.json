@@ -1,0 +1,163 @@
+{
+  "calibration_global": 95,
+  "weapon_name_map": {
+    "M416": "M4",
+    "SCARL": "SCAR",
+    "G36C": "G36",
+    "MicroUZI": "UZI",
+    "Vector": "VECTR",
+    "MP5K": "MP5",
+    "UMP45": "UMP",
+    "TommyGun": "TOMMYG",
+    "MK47 Mutant": "MK47",
+    "M16A4": "M16"
+  },
+  "distance_keys": ["normal", "meio", "pe", "pe_meio"],
+  "attachments": {
+    "muzzle": [
+      { "name": "suppressor", "check_area": [1246, 256, 1274, 284], "check_area2": [1246, 486, 1274, 514] },
+      { "name": "compensator", "check_area": [1246, 256, 1274, 284], "check_area2": [1246, 486, 1274, 514] },
+      { "name": "flash_hider", "check_area": [1246, 256, 1274, 284], "check_area2": [1246, 486, 1274, 514] }
+    ],
+    "grip": [
+      { "name": "vertical_grip", "check_area": [1436, 237, 1484, 285], "check_area2": [1436, 463, 1484, 511] },
+      { "name": "angled_grip", "check_area": [1346, 255, 1374, 284], "check_area2": [1346, 485, 1374, 514] },
+      { "name": "half_grip", "check_area": [1346, 255, 1374, 284], "check_area2": [1346, 485, 1374, 514] },
+      { "name": "light_grip", "check_area": [1346, 255, 1374, 284], "check_area2": [1346, 485, 1374, 514] },
+      { "name": "thumb_grip", "check_area": [1346, 255, 1374, 284], "check_area2": [1346, 485, 1374, 514] }
+    ],
+    "stock": [
+      { "name": "tactical_stock", "check_area": [1432, 248, 1480, 296], "check_area2": [1432, 478, 1480, 526] },
+      { "name": "cheek_pad", "check_area": [1432, 248, 1480, 296], "check_area2": [1432, 478, 1480, 526] }
+    ]
+  },
+  "patterns": {
+    "none": {
+      "M4":    { "normal": 0, "meio": 0, "pe": 0, "pe_meio": 0 },
+      "AKM":   { "normal": 0, "meio": 0, "pe": 0, "pe_meio": 0 },
+      "AUG":   { "normal": 0, "meio": 0, "pe": 0, "pe_meio": 0 },
+      "BERYL": { "normal": 0, "meio": 0, "pe": 0, "pe_meio": 0 },
+      "G36":   { "normal": 0.075, "meio": 0.075, "pe": 0.045, "pe_meio": 0.045 },
+      "SCAR":  { "normal": 0, "meio": 0, "pe": 0, "pe_meio": 0 },
+      "QBZ":   { "normal": 0.055, "meio": 0.055, "pe": 0, "pe_meio": 0 },
+      "UZI":   { "normal": 0, "meio": 0, "pe": 0, "pe_meio": 0 },
+      "VECTR": { "normal": 0, "meio": 0, "pe": 0, "pe_meio": 0 },
+      "MP5":   { "normal": 0, "meio": 0, "pe": 0, "pe_meio": 0 },
+      "BIZON": { "normal": 0, "meio": 0, "pe": 0, "pe_meio": 0 },
+      "UMP":   { "normal": 0, "meio": 0, "pe": 0, "pe_meio": 0 },
+      "TOMMYG": { "normal": -0.05, "meio": -0.05, "pe": -0.1, "pe_meio": -0.1 },
+      "M16":   { "normal": 0, "meio": 0, "pe": 0, "pe_meio": 0 },
+      "M249":  { "normal": 0, "meio": 0, "pe": 0, "pe_meio": 0 },
+      "DP28":  { "normal": 0, "meio": 0, "pe": 0, "pe_meio": 0 },
+      "GROZA": { "normal": 0, "meio": 0, "pe": 0, "pe_meio": 0 },
+      "MK47":  { "normal": 0, "meio": 0, "pe": 0, "pe_meio": 0 },
+      "K2":    { "normal": 0.075, "meio": 0.075, "pe": 0.045, "pe_meio": 0.045 },
+      "ACE32": { "normal": 0, "meio": 0, "pe": 0, "pe_meio": 0 },
+      "A012":  { "normal": 0, "meio": 0, "pe": 0, "pe_meio": 0 },
+      "FAMAS": { "normal": 0, "meio": 0, "pe": 0, "pe_meio": 0 },
+      "MG3":   { "normal": 0, "meio": 0, "pe": 0, "pe_meio": 0 },
+      "P90":   { "normal": 0, "meio": 0, "pe": 0, "pe_meio": 0 },
+      "MP9":   { "normal": 0.15, "meio": 0.15, "pe": 0.15, "pe_meio": 0.15 },
+      "JS9":   { "normal": 0, "meio": -0.5, "pe": 0, "pe_meio": -0.5 }
+    },
+    "suppressor": {
+      "M4":    { "normal": 0.03, "meio": 0.03, "pe": 0.03, "pe_meio": 0.03 },
+      "AKM":   { "normal": 0.06, "meio": 0.06, "pe": 0.06, "pe_meio": 0.06 },
+      "AUG":   { "normal": 0.114, "meio": 0.114, "pe": 0.114, "pe_meio": 0.114 },
+      "BERYL": { "normal": 0.08, "meio": 0.08, "pe": 0.08, "pe_meio": 0.08 },
+      "SCAR":  { "normal": 0.07, "meio": 0.07, "pe": 0.07, "pe_meio": 0.07 },
+      "QBZ":   { "normal": 0.072, "meio": 0.072, "pe": 0.072, "pe_meio": 0.072 },
+      "K2":    { "normal": 0.06, "meio": 0.06, "pe": 0.06, "pe_meio": 0.06 },
+      "ACE32": { "normal": 0.08, "meio": 0.08, "pe": 0.08, "pe_meio": 0.08 },
+      "G36":   { "normal": 0.06, "meio": 0.06, "pe": 0.045, "pe_meio": 0.045 }
+    },
+    "compensator": {
+      "M4":    { "normal": 0.114, "meio": 0.05, "pe": 0.12, "pe_meio": 0.002 },
+      "AKM":   { "normal": 0.09, "meio": 0.09, "pe": 0.09, "pe_meio": 0.09 },
+      "AUG":   { "normal": 0.16, "meio": 0.122, "pe": 0.114, "pe_meio": 0.162 },
+      "BERYL": { "normal": 0.092, "meio": 0.089, "pe": 0.205, "pe_meio": 0.308 },
+      "G36":   { "normal": 0.12, "meio": 0.11, "pe": 0.121, "pe_meio": 0.126 },
+      "SCAR":  { "normal": 0.112, "meio": 0.109, "pe": 0.1325, "pe_meio": 0.1565 },
+      "QBZ":   { "normal": 0.09, "meio": 0.11, "pe": 0.121, "pe_meio": 0.126 },
+      "K2":    { "normal": 0.09, "meio": 0.09, "pe": 0.09, "pe_meio": 0.09 },
+      "ACE32": { "normal": 0.12, "meio": 0.11, "pe": 0.08, "pe_meio": 0.02 },
+      "A012":  { "normal": 0.15, "meio": 0.15, "pe": 0.15, "pe_meio": 0.15 },
+      "M16":   { "normal": 0.15, "meio": 0.15, "pe": 0.15, "pe_meio": 0.15 },
+      "MK14":  { "normal": 0.15, "meio": -0.21, "pe": 0.15, "pe_meio": -0.35 },
+      "SLR":   { "normal": 0.15, "meio": 0.15, "pe": 0.15, "pe_meio": 0.15 },
+      "SKS":   { "normal": 0.15, "meio": 0.15, "pe": 0.15, "pe_meio": 0.15 },
+      "MINI14":{ "normal": 0.15, "meio": 0.15, "pe": 0.15, "pe_meio": 0.15 },
+      "QBU":   { "normal": 0.15, "meio": 0.15, "pe": 0.15, "pe_meio": 0.15 },
+      "FAMAS": { "normal": 0.09, "meio": 0.09, "pe": 0.09, "pe_meio": 0.09 },
+      "DRAGUNOV": { "normal": 0.15, "meio": 0.15, "pe": 0.15, "pe_meio": 0.15 }
+    },
+    "flash_hider": {
+      "M4":    { "normal": 0.04, "meio": 0.04, "pe": 0.04, "pe_meio": 0.04 },
+      "AKM":   { "normal": 0.04, "meio": 0.04, "pe": 0.04, "pe_meio": 0.04 },
+      "BERYL": { "normal": 0.04, "meio": 0.04, "pe": 0.04, "pe_meio": 0.04 },
+      "SCAR":  { "normal": 0.04, "meio": 0.04, "pe": 0.04, "pe_meio": 0.04 },
+      "G36":   { "normal": 0.04, "meio": 0.04, "pe": 0.04, "pe_meio": 0.04 },
+      "QBZ":   { "normal": 0.04, "meio": 0.04, "pe": 0.04, "pe_meio": 0.04 }
+    },
+    "vertical_grip": {
+      "M4":    { "normal": 0.17, "meio": 0.148, "pe": 0.17, "pe_meio": 0.135 },
+      "AUG":   { "normal": 0.165, "meio": 0.17, "pe": 0.225, "pe_meio": 0.201 },
+      "BERYL": { "normal": 0.173, "meio": 0.133, "pe": 0.253, "pe_meio": 0.345 },
+      "G36":   { "normal": 0.15, "meio": 0.15, "pe": 0.168, "pe_meio": 0.168 },
+      "SCAR":  { "normal": 0.14, "meio": 0.146, "pe": 0.085, "pe_meio": 0.1899 },
+      "QBZ":   { "normal": 0.189, "meio": 0.189, "pe": 0.15, "pe_meio": 0.15 },
+      "ACE32": { "normal": 0.17, "meio": 0.17, "pe": 0.22, "pe_meio": 0.17 },
+      "VECTR": { "normal": 0.15, "meio": 0.15, "pe": 0.15, "pe_meio": 0.15 },
+      "MP5":   { "normal": 0.15, "meio": 0.15, "pe": 0.15, "pe_meio": 0.15 },
+      "UMP":   { "normal": 0.15, "meio": 0.15, "pe": 0.15, "pe_meio": 0.15 },
+      "TOMMYG": { "normal": 0.15, "meio": 0.1, "pe": 0.15, "pe_meio": 0.15 },
+      "A012":  { "normal": 0.15, "meio": 0.15, "pe": 0.15, "pe_meio": 0.15 }
+    },
+    "angled_grip": {
+      "M4":    { "normal": 0.16, "meio": 0.1, "pe": 0.18, "pe_meio": 0.085 },
+      "AUG":   { "normal": 0.16068, "meio": 0.16, "pe": 0.2, "pe_meio": 0.19 },
+      "BERYL": { "normal": 0.14, "meio": 0.06, "pe": 0.24, "pe_meio": 0.3 },
+      "G36":   { "normal": 0.163, "meio": 0.19, "pe": 0.145, "pe_meio": 0.145 },
+      "SCAR":  { "normal": 0.1, "meio": 0.131, "pe": 0.08, "pe_meio": 0.133 },
+      "QBZ":   { "normal": 0.18, "meio": 0.2, "pe": 0.15, "pe_meio": 0.088 },
+      "ACE32": { "normal": 0.158, "meio": 0.12, "pe": 0.185, "pe_meio": 0.145 },
+      "A012":  { "normal": 0.2, "meio": 0.2, "pe": 0.06, "pe_meio": 0.06 }
+    },
+    "half_grip": {
+      "M4":    { "normal": 0.142, "meio": 0.142, "pe": 0.142, "pe_meio": 0.112 },
+      "AUG":   { "normal": 0.161, "meio": 0.132, "pe": 0.175, "pe_meio": 0.151 },
+      "BERYL": { "normal": 0.124, "meio": 0.095, "pe": 0.21, "pe_meio": 0.325 },
+      "G36":   { "normal": 0.1356, "meio": 0.1856, "pe": 0.16, "pe_meio": 0.16 },
+      "SCAR":  { "normal": 0.103, "meio": 0.12, "pe": 0.05, "pe_meio": 0.116 },
+      "QBZ":   { "normal": 0.137, "meio": 0.137, "pe": 0.2, "pe_meio": 0.2 },
+      "ACE32": { "normal": 0.14, "meio": 0.14, "pe": 0.2, "pe_meio": 0.08 },
+      "VECTR": { "normal": 0.135, "meio": 0.135, "pe": 0.16, "pe_meio": 0.16 },
+      "MP5":   { "normal": 0.12, "meio": 0.12, "pe": 0.12, "pe_meio": 0.12 },
+      "UMP":   { "normal": 0.135, "meio": 0.135, "pe": 0.135, "pe_meio": 0.135 },
+      "A012":  { "normal": 0.14, "meio": 0.14, "pe": 0.14, "pe_meio": 0.14 }
+    },
+    "light_grip": {
+      "M4":    { "normal": 0.085, "meio": 0.05, "pe": 0.065, "pe_meio": -0.02 },
+      "AUG":   { "normal": 0.16, "meio": 0.12, "pe": 0.16, "pe_meio": 0.105 },
+      "BERYL": { "normal": 0.095, "meio": 0.03, "pe": 0.22, "pe_meio": 0.295 },
+      "G36":   { "normal": 0.0108, "meio": 0.0108, "pe": 0.08, "pe_meio": 0.08 },
+      "SCAR":  { "normal": 0.12, "meio": 0.13, "pe": 0.055, "pe_meio": 0.12 },
+      "QBZ":   { "normal": 0.06, "meio": 0.23, "pe": 0.06, "pe_meio": 0.23 },
+      "ACE32": { "normal": 0.088, "meio": 0.05, "pe": 0.11, "pe_meio": 0.05 },
+      "A012":  { "normal": 0.05, "meio": 0.05, "pe": 0.05, "pe_meio": 0.05 }
+    },
+    "thumb_grip": {
+      "M4":    { "normal": 0.106, "meio": 0.09, "pe": 0.185, "pe_meio": 0.038 },
+      "AUG":   { "normal": 0.17, "meio": 0.15, "pe": 0.17, "pe_meio": 0.19 },
+      "BERYL": { "normal": 0.125, "meio": 0.11, "pe": 0.3, "pe_meio": 0.345 },
+      "G36":   { "normal": 0.12, "meio": 0.23, "pe": 0.18, "pe_meio": 0.19 },
+      "SCAR":  { "normal": 0.08, "meio": 0.125, "pe": 0.04, "pe_meio": 0.1 },
+      "QBZ":   { "normal": 0.12, "meio": 0.22, "pe": 0.15, "pe_meio": 0.12 },
+      "ACE32": { "normal": 0.16, "meio": 0.15, "pe": 0.23, "pe_meio": 0.13 },
+      "VECTR": { "normal": 0.09, "meio": 0.09, "pe": 0.09, "pe_meio": 0.09 },
+      "MP5":   { "normal": 0.09, "meio": 0.09, "pe": 0.09, "pe_meio": 0.09 },
+      "UMP":   { "normal": 0.09, "meio": 0.09, "pe": 0.09, "pe_meio": 0.09 },
+      "A012":  { "normal": 0.09, "meio": 0.09, "pe": 0.09, "pe_meio": 0.09 }
+    }
+  }
+}

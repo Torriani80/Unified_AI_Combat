@@ -6,12 +6,16 @@ from typing import Optional, Tuple
 from logger import log
 
 
+# Tamanho máximo de referência para pré-escala dos templates (1920x1080)
+# ROI slot1: 268x108 | ROI slot2: 230x86
+_REF_TEMPLATE_W = 268
+_REF_TEMPLATE_H = 108
+
+
 class UnifiedObjectDetector:
     """
     Detector de armas por template matching para SLOT 1 e SLOT 2.
-    
-    Monitora duas ROIs (canto inferior direito) onde as armas aparecem na tela
-    e compara com templates para identificar qual arma está equipada em cada slot.
+    Templates são pré-escalados no carregamento para máxima performance.
     """
     def __init__(self, method: str = "template"):
         self.method = method
@@ -35,7 +39,6 @@ class UnifiedObjectDetector:
         roi_w = int(frame_width * 0.12)
         roi_h = int(frame_height * 0.08)
         roi_x = frame_width - roi_w - int(frame_width * 0.02)
-        # Posiciona acima do Slot 1 (ROI 1 tem 10% + 2% margem)
         roi_y = frame_height - int(frame_height * 0.12) - roi_h - int(frame_height * 0.02)
         return (roi_x, roi_y, roi_w, roi_h)
 
@@ -48,7 +51,6 @@ class UnifiedObjectDetector:
         template_dir = base_path / "weapon_templates"
         if not template_dir.exists():
             log(f"[ARMAS] Diretório de templates não encontrado: {template_dir}")
-            log("[ARMAS] Coloque imagens .png das armas em weapon_templates/")
             return
 
         for fname in sorted(template_dir.iterdir()):
@@ -56,52 +58,49 @@ class UnifiedObjectDetector:
                 img = cv2.imread(str(fname), cv2.IMREAD_GRAYSCALE)
                 if img is not None:
                     name = fname.stem.upper()
+                    # Pré-escala para tamanho máximo de referência
+                    h, w = img.shape
+                    if h > _REF_TEMPLATE_H or w > _REF_TEMPLATE_W:
+                        factor = min(_REF_TEMPLATE_H / h, _REF_TEMPLATE_W / w) * 0.85
+                        if factor > 0:
+                            new_w = max(1, int(w * factor))
+                            new_h = max(1, int(h * factor))
+                            img = cv2.resize(img, (new_w, new_h), interpolation=cv2.INTER_AREA)
                     self.templates[name] = img
                     self.weapon_names.append(name)
-                    log(f"[ARMAS] Template carregado: {name} ({img.shape})")
 
         if not self.templates:
             log("[ARMAS] Nenhum template de arma encontrado em weapon_templates/")
         else:
-            log(f"[ARMAS] {len(self.templates)} templates de armas carregados")
+            log(f"[ARMAS] {len(self.templates)} templates de armas carregados e pré-escalados")
 
     def get_center_of_screen(self, frame: np.ndarray):
         h, w = frame.shape[:2]
         return (w / 2.0, h / 2.0)
 
     def _match_weapon_in_roi(self, gray_roi: np.ndarray) -> Tuple[Optional[str], float]:
-        """Compara a ROI com todos os templates e retorna (nome, confiança)."""
-        matches = []
-        threshold = 0.70
+        """Compara a ROI com templates. Early exit se confiança > 0.85."""
         rh, rw = gray_roi.shape
+        best_name = None
+        best_conf = 0.0
 
         for name, templ in self.templates.items():
             th, tw = templ.shape
             if th > rh or tw > rw:
-                factor = min(rh / th, rw / tw) * 0.85
-                if factor <= 0:
-                    continue
-                new_w = max(1, int(tw * factor))
-                new_h = max(1, int(th * factor))
-                templ = cv2.resize(templ, (new_w, new_h), interpolation=cv2.INTER_AREA)
-            result = cv2.matchTemplate(gray_roi, templ, cv2.TM_CCOEFF_NORMED)
-            _, max_val, _, _ = cv2.minMaxLoc(result)
-            matches.append((name, float(max_val)))
+                continue  # template maior que ROI, impossível dar match
+            try:
+                result = cv2.matchTemplate(gray_roi, templ, cv2.TM_CCOEFF_NORMED)
+                _, max_val, _, _ = cv2.minMaxLoc(result)
+            except Exception:
+                continue
 
-        if not matches:
-            return (None, 0.0)
+            if max_val > best_conf:
+                best_conf = float(max_val)
+                best_name = name
+                if best_conf > 0.85:
+                    return (best_name, best_conf)
 
-        matches.sort(key=lambda x: x[1], reverse=True)
-        best_name, best_conf = matches[0]
-
-        if len(matches) > 1:
-            second_conf = matches[1][1]
-            if (best_conf - second_conf) < 0.03: # Reduzido para 3%
-                if best_conf < 0.80: # Limiar de "certeza absoluta" reduzido para 0.80
-                    return (None, 0.0)
-
-        if best_conf >= threshold:
-            # log(f"[DEBUG ARMA] Match: {best_name} ({best_conf:.2f}) | Second: {matches[1][0] if len(matches)>1 else 'N/A'} ({matches[1][1]:.2f} if len(matches)>1 else 0)")
+        if best_conf >= 0.68:
             return (best_name, best_conf)
         return (None, 0.0)
 
@@ -111,6 +110,8 @@ class UnifiedObjectDetector:
             return None
         h, w = frame.shape[:2]
         rx, ry, rw, rh = self._get_roi_slot1(w, h)
+        if rw < 20 or rh < 20:
+            return None
         roi = frame[ry:ry+rh, rx:rx+rw]
         if roi.size == 0:
             return None
@@ -127,6 +128,8 @@ class UnifiedObjectDetector:
             return None
         h, w = frame.shape[:2]
         rx, ry, rw, rh = self._get_roi_slot2(w, h)
+        if rw < 20 or rh < 20:
+            return None
         roi = frame[ry:ry+rh, rx:rx+rw]
         if roi.size == 0:
             return None

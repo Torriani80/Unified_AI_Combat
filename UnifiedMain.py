@@ -396,7 +396,6 @@ class UnifiedCombatSystem:
         slot1_weapon = None
         slot2_weapon = None
         auto_weapon = None
-        _detect_counts = {}  # estabilidade: N consecutivas antes de trocar
         CROSSHAIR_W = 160
         CROSSHAIR_H = 120
         CROSSHAIR_THRESHOLD = 38  # acima disso = alvo na mira (ajustar se precisar)
@@ -433,8 +432,8 @@ class UnifiedCombatSystem:
                     self._home_was_down = False
 
                 if self.running:
-                    # Detecta armas nos dois slots a cada 5 frames
-                    if frame_count_total % 5 == 0:
+                    # Detecta armas nos dois slots a cada 2 frames
+                    if frame_count_total & 1:  # % 2
                         t1 = _time.perf_counter()
                         s1 = self.detector.detect_slot1(frame)
                         s2 = self.detector.detect_slot2(frame)
@@ -446,25 +445,18 @@ class UnifiedCombatSystem:
                         if s2:
                             slot2_weapon = s2
 
-                        # Auto-select com estabilidade: precisa de 3 deteccoes consecutivas
+                        # Auto-select instantâneo: troca na primeira detecção
                         if not self._manual_override:
                             new_auto = s1 or s2
-                            if new_auto:
-                                _detect_counts[new_auto] = _detect_counts.get(new_auto, 0) + 1
-                                for other in list(_detect_counts.keys()):
-                                    if other != new_auto:
-                                        _detect_counts.pop(other, None)
-                                if _detect_counts[new_auto] >= 2 and new_auto != auto_weapon:
-                                    auto_weapon = new_auto
-                                    _detect_counts.clear()
-                                    preset_key = self._find_preset(auto_weapon)
-                                    if preset_key:
-                                        self.current_weapon_cfg = dict(self.weapon_presets[preset_key])
-                                        self.executor.set_current_weapon(auto_weapon)
-                                        log(f"[ARMA DETECTADA] {auto_weapon} -> {preset_key} (2x consecutivo)")
-                                        self._hud_weapon_label = f"WEAPON: [ {auto_weapon.upper()} ]"
-                            else:
-                                _detect_counts.clear()
+                            if new_auto and new_auto != auto_weapon:
+                                auto_weapon = new_auto
+                                self._last_detect_time = _time.monotonic()
+                                preset_key = self._find_preset(auto_weapon)
+                                if preset_key:
+                                    self.current_weapon_cfg = dict(self.weapon_presets[preset_key])
+                                    self.executor.set_current_weapon(auto_weapon)
+                                    log(f"[ARMA DETECTADA] {auto_weapon} -> {preset_key}")
+                                    self._hud_weapon_label = f"WEAPON: [ {auto_weapon.upper()} ]"
 
                     # Anti-Recoil ativado SOMENTE com botão direito pressionado
                     if (ctypes.windll.user32.GetAsyncKeyState(0x02) & 0x8000) != 0:
